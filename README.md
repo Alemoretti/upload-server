@@ -180,6 +180,22 @@ pnpm run dev
 ### Test Database
 The test suite automatically sets up a test database and runs migrations before each test run.
 
+**Important:** Create a `.env.test` file for local testing:
+```env
+PORT=3333
+NODE_ENV=test
+DATABASE_URL=postgresql://docker:docker@localhost:5433/upload_test
+
+# Test Cloudflare R2 Configuration
+CLOUDFLARE_ACCOUNT_ID=test_account_id
+CLOUDFLARE_ACCESS_KEY_ID=test_access_key
+CLOUDFLARE_SECRET_ACCESS_KEY=test_secret_key
+CLOUDFLARE_BUCKET=test_bucket
+CLOUDFLARE_PUBLIC_URL=https://test-bucket.r2.dev
+```
+
+**Note:** The test database uses port `5433` to match the local Docker setup. Make sure your Docker container is running on port `5433` (which is the default configuration in `docker-compose.yml`).
+
 ## 🗄️ Database Management
 
 ### Generate Migrations

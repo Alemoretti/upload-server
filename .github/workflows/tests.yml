@@ -15,7 +15,7 @@ jobs:
       postgres:
         image: postgres:13
         ports:
-          - 5432:5432
+          - 5433:5432
         env:
           POSTGRES_USER: docker
           POSTGRES_PASSWORD: docker
@@ -46,7 +46,7 @@ jobs:
       - name: Set up test environment
         run: |
           cat > .env.test << EOF
-          DATABASE_URL=postgresql://docker:docker@localhost:5432/upload_test
+          DATABASE_URL=postgresql://docker:docker@localhost:5433/upload_test
           NODE_ENV=test
           PORT=3333
           CLOUDFLARE_ACCOUNT_ID=test_account_id

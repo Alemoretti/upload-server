@@ -45,13 +45,15 @@ jobs:
       
       - name: Set up test environment
         run: |
-          echo "DATABASE_URL=postgresql://docker:docker@localhost:5432/upload_test" >> .env.test
-          echo "NODE_ENV=test" >> .env.test
-          echo "PORT=3333" >> .env.test
-          echo "CLOUDFLARE_ACCOUNT_ID=test_account_id" >> .env.test
-          echo "CLOUDFLARE_ACCESS_KEY_ID=test_access_key" >> .env.test
-          echo "CLOUDFLARE_SECRET_ACCESS_KEY=test_secret_key" >> .env.test
-          echo "CLOUDFLARE_BUCKET=test_bucket" >> .env.test
-          echo "CLOUDFLARE_PUBLIC_URL=https://test-bucket.r2.dev" >> .env.test
+          cat > .env.test << EOF
+          DATABASE_URL=postgresql://docker:docker@localhost:5432/upload_test
+          NODE_ENV=test
+          PORT=3333
+          CLOUDFLARE_ACCOUNT_ID=test_account_id
+          CLOUDFLARE_ACCESS_KEY_ID=test_access_key
+          CLOUDFLARE_SECRET_ACCESS_KEY=test_secret_key
+          CLOUDFLARE_BUCKET=test_bucket
+          CLOUDFLARE_PUBLIC_URL=https://test-bucket.r2.dev
+          EOF
       
       - run: pnpm run test

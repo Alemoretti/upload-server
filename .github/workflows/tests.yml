@@ -15,7 +15,7 @@ jobs:
       postgres:
         image: postgres:13
         ports:
-          - 5432:5432
+          - 5433:5432
         env:
           POSTGRES_USER: docker
           POSTGRES_PASSWORD: docker
@@ -32,7 +32,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9
+          version: 10.17.1
           run_install: false
 
       - name: Install Node.js
@@ -42,4 +42,18 @@ jobs:
           cache: "pnpm"
 
       - run: pnpm install --frozen-lockfile
+      
+      - name: Set up test environment
+        run: |
+          cat > .env.test << EOF
+          DATABASE_URL=postgresql://docker:docker@localhost:5433/upload_test
+          NODE_ENV=test
+          PORT=3333
+          CLOUDFLARE_ACCOUNT_ID=test_account_id
+          CLOUDFLARE_ACCESS_KEY_ID=test_access_key
+          CLOUDFLARE_SECRET_ACCESS_KEY=test_secret_key
+          CLOUDFLARE_BUCKET=test_bucket
+          CLOUDFLARE_PUBLIC_URL=https://test-bucket.r2.dev
+          EOF
+      
       - run: pnpm run test

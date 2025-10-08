@@ -87,6 +87,13 @@ pnpm run dev
 
 The server will start on `http://localhost:3333`
 
+### Build for Production
+```bash
+pnpm run build
+```
+
+This will compile TypeScript to JavaScript and generate optimized bundles in the `dist/` folder.
+
 ### API Documentation
 Visit `http://localhost:3333/docs` to access the interactive Swagger documentation.
 
@@ -161,6 +168,15 @@ pnpm test
 pnpm test:watch
 ```
 
+### Build Commands
+```bash
+# Build for production
+pnpm run build
+
+# Development server (with hot reload)
+pnpm run dev
+```
+
 ### Test Database
 The test suite automatically sets up a test database and runs migrations before each test run.
 
@@ -218,6 +234,14 @@ src/
 | `CLOUDFLARE_PUBLIC_URL` | Public URL for bucket | Yes | - |
 
 ## 🚀 Deployment
+
+### Build for Production
+```bash
+# Compile TypeScript to JavaScript
+pnpm run build
+
+# The compiled files will be in the dist/ folder
+```
 
 ### Docker
 ```bash

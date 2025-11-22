@@ -22,13 +22,15 @@ RUN pnpm prune --prod
 
 FROM node:20-alpine3.21 AS deploy
 
-USER 1000
-
 WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/package.json ./package.json
+
+RUN chown -R 1000:1000 /usr/src/app
+
+USER 1000
 
 ENV PORT=3333
 ENV NODE_ENV=development

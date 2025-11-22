@@ -24,11 +24,9 @@ FROM cgr.dev/chainguard/node:latest AS deploy
 
 WORKDIR /usr/src/app
 
-COPY --from=build /usr/src/app/dist ./dist
-COPY --from=build /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/package.json ./package.json
-
-RUN chown -R 1000:1000 /usr/src/app
+COPY --chown=1000:1000 --from=build /usr/src/app/dist ./dist
+COPY --chown=1000:1000 --from=build /usr/src/app/node_modules ./node_modules
+COPY --chown=1000:1000 --from=build /usr/src/app/package.json ./package.json
 
 USER 1000
 

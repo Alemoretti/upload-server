@@ -20,13 +20,17 @@ COPY --from=dependencies /usr/src/app/node_modules ./node_modules
 RUN pnpm build
 RUN pnpm prune --prod
 
-FROM node:20-alpine3.21 AS deploy
+FROM cgr.dev/chainguard/node:latest AS deploy
 
 WORKDIR /usr/src/app
 
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/package.json ./package.json
+
+RUN chown -R 1000:1000 /usr/src/app
+
+USER 1000
 
 ENV PORT=3333
 ENV NODE_ENV=development
@@ -39,4 +43,4 @@ ENV CLOUDFLARE_PUBLIC_URL="https://pub-433d836c219e471fade1051a83b13aea.r2.dev"
 
 EXPOSE 3333
 
-CMD ["node", "dist/server.mjs"]
+CMD ["dist/server.mjs"]
